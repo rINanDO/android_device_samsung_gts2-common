@@ -47,6 +47,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path="/efs/bluetooth/bt_addr"
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2048
+TARGET_SCREEN_WIDTH := 1536
+
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl-legacy \
@@ -117,10 +121,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/gnss.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gnss.conf
 
 # Graphics
-PRODUCT_AAPT_CONFIG := xlarge
-PRODUCT_AAPT_PREF_CONFIG := xhdpi
-PRODUCT_AAPT_PREBUILT_DPI := hdpi mdpi
-
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
@@ -240,6 +240,10 @@ PRODUCT_PACKAGES += \
 # RRO
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
+
+# Screen density
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \
