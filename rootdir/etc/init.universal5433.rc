@@ -62,6 +62,9 @@ on init
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
 
+    # Persistent logcat
+    mkdir /data/.logs 0775 system system
+
     setprop vold.post_fs_data_done 1
 
     # Permissions Camera
@@ -635,3 +638,12 @@ service argos-daemon /vendor/bin/argosd
     class main
     user system
     group system radio
+
+service persistentLogging /system/bin/logcat -r 1024 -n 9 -f /data/.logs/log
+    class core
+    user system
+    group system
+    oneshot
+
+on property:persist.logcat.enabled=1
+    start persistentLogging
