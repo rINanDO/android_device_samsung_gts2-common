@@ -202,3 +202,5 @@
 
 # Wifi
 #/(vendor|system/vendor)/bin/hw/android\.hardware\.wifi@1\.0-service\.legacy              u:object_r:hal_wifi_default_exec:s0
+
+/sys/module/dhd/parameters/firmware_path	u:object_r:sysfs_wifi_writable:s0

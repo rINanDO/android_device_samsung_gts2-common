@@ -51,6 +51,7 @@ allow init sysfs_bluetooth_writable:file setattr;
 allow init sysfs_devices_system_cpu:file write;
 allow init sysfs_sec_switch:lnk_file read;
 allow init sysfs_sensor:lnk_file read;
+allow init sysfs_wifi_writable:file setattr;
 allow init system_data_file:file lock;
 allow init system_data_root_file:file rename;
 allow init system_file:file execute_no_trans;
@@ -58,6 +59,8 @@ allow init system_file:file mounton;
 allow init system_server:binder call;
 allow init system_server:binder transfer;
 allow init system_server:unix_stream_socket read;
+
+
 allow init vendor_file:file x_file_perms;
 allow init vndbinder_device:chr_file rw_file_perms;
 allow init vndservicemanager:binder call;
