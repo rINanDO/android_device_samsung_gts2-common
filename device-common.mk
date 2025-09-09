@@ -104,6 +104,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service \
+    android.hardware.drm@1.3 \
     android.hardware.drm-service.clearkey
 
 # Fingerprint
@@ -276,6 +277,8 @@ PRODUCT_PACKAGES += \
 
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
+
+AB_OTA_UPDATER := false
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
