@@ -278,7 +278,10 @@ PRODUCT_PACKAGES += \
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 
+# Update
 AB_OTA_UPDATER := false
+PRODUCT_SOONG_NAMESPACES += \
+    bootable/deprecated-ota
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
