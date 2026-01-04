@@ -1,0 +1,12 @@
+type sysfs_camera_writable, fs_type, sysfs_type;
+
+allow hal_camera_default default_android_vndservice:service_manager find;
+allow hal_camera_default default_prop:file { getattr open read };
+allow hal_camera_default exported_camera_prop:file { getattr open read };
+allow hal_camera_default hal_graphics_mapper_hwservice:hwservice_manager find;
+allow hal_camera_default mediaserver:binder { call transfer };
+allow hal_camera_default vndbinder_device:chr_file { open read write ioctl };
+allow hal_camera_default vndservicemanager:binder call;
+allow hal_camera_default sysfs_camera_writable:file rw_file_perms;
+allow hal_camera_default sysfs_camera_writable:dir rw_dir_perms;;
+allow hal_camera_default system_prop:file { getattr open read };

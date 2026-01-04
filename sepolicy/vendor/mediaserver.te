@@ -1,4 +1,6 @@
-#============= mediaserver ==============
 allow mediaserver exported_camera_prop:file r_file_perms;
+allow mediaserver hal_camera_default:binder { transfer call};
+allow mediaserver fwk_camera_service:service_manager find;
 allow mediaserver package_native_service:service_manager find;
 allow mediaserver vendor_file:file rx_file_perms;
+allow mediaserver virtual_camera_service:service_manager find;
