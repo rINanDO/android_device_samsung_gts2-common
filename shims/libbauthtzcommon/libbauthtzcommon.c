@@ -17,11 +17,10 @@
 #define LOG_TAG "libbauthtzcommon_shim"
 #define LOG_NDEBUG 0
 
-#include <cutils/log.h>
 
 int BAuth_Hat_OP(void *dest, int dummy)
 {
-    ALOGV("SHIM: hijacking %s!", __func__);
+//    ALOGV("SHIM: hijacking %s!", __func__);
 
     /*
      * This function is supposed to pass the hardware authentication token
