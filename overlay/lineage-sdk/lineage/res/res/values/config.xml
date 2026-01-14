@@ -87,4 +87,7 @@
     -->
     <integer name="config_deviceSupportsButtonBrightnessControl">1</integer>
 
+    <!-- Disable listening for fingerprints when the screen is off.
+         This reduces battery drain significantly. -->
+    <bool name="config_fingerprintWakeAndUnlock">false</bool>
 </resources>
