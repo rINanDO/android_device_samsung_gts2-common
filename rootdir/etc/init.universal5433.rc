@@ -643,7 +643,9 @@ service persistentLogging /system/bin/logcat -r 1024 -n 9 -f /data/.logs/log
     class core
     user system
     group system
-    oneshot
 
 on property:persist.logcat.enabled=1
     start persistentLogging
+
+on property:persist.logcat.enabled=0
+    stop persistentLogging
