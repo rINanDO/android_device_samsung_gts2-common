@@ -308,12 +308,11 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service.legacy \
+    android.hardware.wifi@1.0 \
+    android.hardware.wifi-service \
     hostapd \
     libwpa_client \
-    macloader \
     wificond \
-    wifiloader \
     wpa_supplicant \
     wpa_supplicant.conf
 
