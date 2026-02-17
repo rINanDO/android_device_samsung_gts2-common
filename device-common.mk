@@ -94,7 +94,7 @@ PRODUCT_COPY_FILES += \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.gts2
+    vendor.lineage.livedisplay-service.samsung-exynos
 
 # DRM
 PRODUCT_PACKAGES += \
