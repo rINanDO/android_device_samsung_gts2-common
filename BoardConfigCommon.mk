@@ -172,7 +172,7 @@ PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 SKIP_DISPLAY_BLANK_CTRL := true
 
 # Include path
-TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include
+$(call soong_config_set,samsungVars,target_specific_header_path,$(LOCAL_PATH)/include)
 
 # Legacy BLOB Support
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
