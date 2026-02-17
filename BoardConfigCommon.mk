@@ -167,7 +167,7 @@ BOARD_HDMI_INCAPABLE := true
 
 # Hidl
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    vendor/lineage/config/device_framework_matrix.xml \
+    hardware/lineage/interfaces/compatibility_matrices/compatibility_matrix.lineage.xml  \
     $(LOCAL_PATH)/manifest/framework_compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := device/samsung/gts2-common/manifest.xml
 DEVICE_MATRIX_FILE := hardware/qcom-caf/common/compatibility_matrix.xml
