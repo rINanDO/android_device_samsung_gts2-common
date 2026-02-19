@@ -184,7 +184,7 @@
 
 # Fastcharge
 # Kanged from https://review.lineageos.org/c/LineageOS/android_device_samsung_universal7880-common/+/305244/8/sepolicy/file_contexts
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.fastcharge@1\.0-service\.samsung         u:object_r:hal_lineage_fastcharge_default_exec:s0
+#/(vendor|system/vendor)/bin/hw/vendor\.lineage\.fastcharge@1\.0-service\.samsung         u:object_r:hal_lineage_fastcharge_default_exec:s0
 
 # Fingerprint
 # kanged from https://github.com/LineageOS/android_device_samsung_universal7580-common/blob/lineage-18.1/sepolicy/file_contexts
