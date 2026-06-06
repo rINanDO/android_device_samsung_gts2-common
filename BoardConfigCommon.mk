@@ -240,8 +240,8 @@ $(call soong_config_set,bionic,ld_shim_libs,"\
     /system/bin/mediaserver|/system/lib/libstagefright_shim.so")
 
 # Legacy BLOB Support
-TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
-    /system/vendor/bin/hw/rild=27
+$(call soong_config_set,bionic,sdk_version_overrides,"\
+    /system/vendor/bin/hw/rild=27")
 	
 # Network Routing
 TARGET_NEEDS_NETD_DIRECT_CONNECT_RULE := true	
