@@ -234,10 +234,10 @@ SELINUX_IGNORE_NEVERALLOWS := true
 #TARGET_NO_SENSOR_PERMISSION_CHECK := true
 
 # Shims
-TARGET_LD_SHIM_LIBS := \
+$(call soong_config_set,bionic,ld_shim_libs,"\
     /system/vendor/lib/libbauthserver.so|libbauthtzcommon_shim.so \
     /system/vendor/lib/libexynoscamera.so|libexynoscamera_shim.so \
-    /system/bin/mediaserver|/system/lib/libstagefright_shim.so
+    /system/bin/mediaserver|/system/lib/libstagefright_shim.so")
 
 # Legacy BLOB Support
 TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
