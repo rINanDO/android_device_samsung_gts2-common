@@ -90,9 +90,9 @@ TARGET_SCREEN_WIDTH := 1536
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_CUSTOM_BT_CONFIG := $(LOCAL_PATH)/bluetooth/libbt_vndcfg.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
+PRODUCT_SOONG_NAMESPACES += hardware/broadcom/libbt
+$(call soong_config_set,brcm_libbt,custom_bt_config,//$(LOCAL_PATH):vnd_exynos5433.txt)
+$(call soong_config_set,brcm_libbt,bdroid_buildcfg_include_dir,$(LOCAL_PATH)/bluetooth)
 
 # Camera
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true

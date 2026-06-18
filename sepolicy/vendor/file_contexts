@@ -170,9 +170,6 @@
 
 /(vendor|system/vendor)/bin/hw/android\.hardware\.audio\.service\.exynos5                u:object_r:hal_audio_default_exec:s0
 
-# Bluetooth
-/(vendor|system/vendor)/bin/hw/android\.hardware\.bluetooth@1\.0-service                 u:object_r:hal_bluetooth_default_exec:s0
-
 # DRM
 # kanged from https://github.com/LineageOS/android_device_motorola_msm8916-common/tree/lineage-18.1/sepolicy
 
