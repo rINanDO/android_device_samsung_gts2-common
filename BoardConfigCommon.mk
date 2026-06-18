@@ -213,10 +213,6 @@ TARGET_POWERHAL_VARIANT := samsung
 # Properties
 TARGET_SYSTEM_PROP += $(LOCAL_PATH)/system.prop
 
-# Properties
-#TARGET_VENDOR_PROP_OVERRIDE := true
-#TARGET_VENDOR_PROP += device/samsung/gts2-common/vendor.prop
-
 # Recovery
 BOARD_HAS_DOWNLOAD_MODE := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.universal5433

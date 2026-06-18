@@ -103,6 +103,9 @@ on post-fs-data
     rm /data/system/gps/sv_cno.info
 
 on boot
+    setprop vendor.powerhal.init 1
+    setprop vendor.powerhal.disp.idle_support false
+
     # Reduce reserved lowmem from ~48MB to ~12MB
     write /proc/sys/vm/lowmem_reserve_ratio "128 128"
 

@@ -303,7 +303,7 @@ on boot
     chown radio system /sys/class/secgpio_check/secgpio_check_all/checked_sleepGPIO
 
 #permission for TSP, Touchkey
-    chown system radio /sys/class/sec/tsp/cmd
+    chown system system /sys/class/sec/tsp/cmd
     chmod 0660 /sys/class/sec/tsp/input/enabled
     chown system system /sys/class/sec/tsp/input/enabled
 

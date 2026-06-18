@@ -246,8 +246,7 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-impl \
-    android.hardware.power@1.0-service
+    android.hardware.power-service.pixel-libperfmgr
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -286,7 +285,9 @@ PRODUCT_SOONG_NAMESPACES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-    hardware/samsung
+    hardware/samsung \
+    hardware/google/interfaces \
+    hardware/google/pixel    
 
 # System
 PRODUCT_PROPERTY_OVERRIDES += \
