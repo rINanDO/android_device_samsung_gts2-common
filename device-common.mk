@@ -248,6 +248,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.power-service.pixel-libperfmgr
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
+
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.universal5433 \
@@ -281,6 +284,7 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 AB_OTA_UPDATER := false
 PRODUCT_SOONG_NAMESPACES += \
     bootable/deprecated-ota
+
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
