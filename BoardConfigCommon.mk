@@ -95,7 +95,7 @@ $(call soong_config_set,brcm_libbt,custom_bt_config,//$(LOCAL_PATH):vnd_exynos54
 $(call soong_config_set,brcm_libbt,bdroid_buildcfg_include_dir,$(LOCAL_PATH)/bluetooth)
 
 # Camera
-TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+$(call soong_config_set,camera_hal1,no_cameraserver,true)
 BOARD_USE_SAMSUNG_CAMERAFORMAT_NV21 := true
 
 # Charger/Healthd
@@ -172,7 +172,7 @@ PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 SKIP_DISPLAY_BLANK_CTRL := true
 
 # Include path
-$(call soong_config_set,samsungVars,target_specific_header_path,$(LOCAL_PATH)/include)
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Legacy BLOB Support
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
@@ -232,7 +232,6 @@ SELINUX_IGNORE_NEVERALLOWS := true
 # Shims
 $(call soong_config_set,bionic,ld_shim_libs,"\
     /system/vendor/lib/libbauthserver.so|libbauthtzcommon_shim.so \
-    /system/vendor/lib/libexynoscamera.so|libexynoscamera_shim.so \
     /system/bin/mediaserver|/system/lib/libstagefright_shim.so")
 
 # Legacy BLOB Support
