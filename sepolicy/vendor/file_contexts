@@ -92,6 +92,10 @@
 /sys/devices/14ef0000.hsi2c(/.*)?                                                      u:object_r:sysfs_batteryinfo:s0
 /sys/class/power_supply(/.*)?                                                          u:object_r:sysfs_batteryinfo:s0
 
+# Graphics/Panel
+/sys/devices/[0-9]+\.dsim/lcd/panel(/.*)?           u:object_r:sysfs_graphics:s0
+/sys/class/lcd/panel/smart_on                       u:object_r:sysfs_graphics:s0
+
 # Fastcharge
 /sys/class/sec/switch(/.*)?                           u:object_r:sysfs_sec_switch:s0
 
