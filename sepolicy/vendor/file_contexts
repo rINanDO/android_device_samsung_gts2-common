@@ -14,7 +14,7 @@
 #/data/biometrics(/.*)?       u:object_r:fingerprint_data_file:s0
 
 # mobicore
-/data/misc/mcRegistry(/.*)?  u:object_r:tee_data_file:s0
+#/data/misc/mcRegistry(/.*)?  u:object_r:tee_data_file:s0
 
 
 ##########################
