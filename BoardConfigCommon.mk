@@ -220,6 +220,7 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.universal5433
 # SELinux
 #BOARD_SEPOLICY_DIRS += device/samsung/gts2-common/sepolicy
 include device/lineage/sepolicy/exynos/sepolicy.mk
+include device/lineage/sepolicy/libperfmgr/sepolicy.mk
 include device/samsung_slsi/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_VERS := $(PLATFORM_SDK_VERSION).0
 BOARD_VENDOR_SEPOLICY_DIRS += device/samsung/gts2-common/sepolicy/vendor
