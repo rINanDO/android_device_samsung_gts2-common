@@ -38,6 +38,7 @@ type sysfs_ausb, fs_type, sysfs_type, mlstrustedobject;
 type sysfs_camera, fs_type, sysfs_type, mlstrustedobject;
 type sysfs_cpuidle_writable, fs_type, sysfs_type, mlstrustedobject;
 type sysfs_gps, fs_type, sysfs_type, mlstrustedobject;
+type sysfs_gpu_writable, fs_type, sysfs_type, mlstrustedobject;
 type sysfs_graphics, sysfs_type, fs_type, mlstrustedobject;
 type sysfs_homebutton_writable, fs_type, sysfs_type, mlstrustedobject;
 type sysfs_interactive_writable, fs_type, sysfs_type, mlstrustedobject;

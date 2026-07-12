@@ -96,6 +96,9 @@
 /sys/devices/13800000.decon_fb/lcd/panel(/.*)                               u:object_r:sysfs_graphics:s0
 /sys/class/lcd/panel(/.*)                                                   u:object_r:sysfs_graphics:s0
 
+# GPU (Mali)
+/sys/devices/14ac0000.mali(/.*)?                                            u:object_r:sysfs_gpu_writable:s0
+
 # Fastcharge
 /sys/class/sec/switch(/.*)?                           u:object_r:sysfs_sec_switch:s0
 
