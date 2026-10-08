@@ -80,10 +80,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 
-# Configstore
-PRODUCT_PACKAGES += \
-    disable_configstore
-    
 # Display
 #PRODUCT_PACKAGES += \
 #   AdvancedDisplay
@@ -194,7 +190,6 @@ PRODUCT_COPY_FILES += \
 
 # Memory
 PRODUCT_PACKAGES += \
-    android.hardware.memtrack@1.0-impl \
     memtrack.exynos5
 
 # MobiCore
