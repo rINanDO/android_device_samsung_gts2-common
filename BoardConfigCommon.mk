@@ -68,10 +68,60 @@ TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/samsung/universal5433
+KERNEL_ARCH := arm
 KERNEL_TOOLCHAIN_PREFIX := arm-linux-androideabi-
 BOARD_KERNEL_IMAGE_NAME := zImage
 TARGET_LINUX_KERNEL_VERSION := 3.10
 TARGET_KERNEL_CLANG_COMPILE := false
+
+# This 3.10 kernel predates clang-built-linux support, so it needs the GCC
+# cross-compiler vendor/lineage/build/tasks/kernel.mk otherwise defaults away
+# from (it falls back to clang whenever KERNEL_CC is unset). KERNEL_TOOLCHAIN_PREFIX
+# above is a vestige of an older kernel.mk that read it directly; the current one
+# only understands KERNEL_CC/KERNEL_CROSS_COMPILE.
+BUILD_TOP := $(abspath .)
+GTS210WIFI_GCC_PATH := $(abspath prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-)
+KERNEL_CC := CC=$(GTS210WIFI_GCC_PATH)gcc
+KERNEL_CROSS_COMPILE := CROSS_COMPILE=$(GTS210WIFI_GCC_PATH)
+KERNEL_MAKE_CMD := $(abspath prebuilts/build-tools/linux-x86/bin/make)
+
+# The kernel's host tools (fixdep, unifdef, conf, ...) build with HOSTCC/HOSTCXX,
+# which default to the bare "gcc"/"g++" names on $PATH. That's fine for the real
+# kernel.mk build task (which inherits the invoking shell's PATH), but
+# generated_kernel_includes' Soong genrule runs this same make invocation inside
+# an sbox sandbox whose PATH is restricted to prebuilts/build-tools' hermetic
+# tool set -- no system gcc there -- so HOSTCC must be pinned to a prebuilt
+# that's actually on that PATH, or the genrule fails with "gcc: not found" on
+# scripts/basic/fixdep and silently produces no headers.
+# Must match the version Soong actually builds everything else with
+# (build/soong/cc/config/global.go's ClangDefaultVersion); multiple clang-r*
+# prebuilts coexist in the tree for different purposes, so this can't be
+# glob-guessed safely and has to track that value by hand.
+GTS210WIFI_HOST_CLANG_PATH := $(abspath prebuilts/clang/host/linux-x86/clang-r584948b/bin)
+KERNEL_MAKE_FLAGS := HOSTCC=$(GTS210WIFI_HOST_CLANG_PATH)/clang HOSTCXX=$(GTS210WIFI_HOST_CLANG_PATH)/clang++
+
+# vendor/lineage/build/soong/Android.bp's generated_kernel_includes genrule
+# (what build/make/core/binary.mk's "old-style kernel header include" ->
+# generated_kernel_headers translation ultimately pulls in) expands its cmd
+# against the lineageVarsPlugin soong config namespace, same as
+# vendor/lineage/config/BoardConfigSoong.mk's EXPORT_TO_SOONG list does for
+# devices that include it. This device doesn't, so without this nothing is
+# exported, the genrule silently emits no headers (see
+# vendor/lineage/build/soong/generator/generator.go's graceful skip for
+# modules referencing unexported vars), and anything still relying on the
+# old $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include path -- such as
+# hardware/samsung_slsi/exynos/libexynosutils -- fails with a missing
+# kernel UAPI header instead.
+OUT_DIR_PREFIX := $(shell echo $(OUT_DIR) | sed -e 's|/target/.*$$||g')
+ifeq ($(OUT_DIR_PREFIX),out)
+    KERNEL_BUILD_OUT_PREFIX := $(BUILD_TOP)/
+endif
+$(call add_soong_config_namespace,lineageVarsPlugin)
+$(foreach v,KERNEL_ARCH KERNEL_BUILD_OUT_PREFIX KERNEL_CROSS_COMPILE \
+        KERNEL_MAKE_CMD KERNEL_MAKE_FLAGS KERNEL_PATH PATH_OVERRIDE_SOONG \
+        TARGET_KERNEL_CONFIG TARGET_KERNEL_SOURCE TARGET_KERNEL_PLATFORM_TARGET \
+        TARGET_MAX_PAGE_SIZE_SUPPORTED TARGET_PREBUILT_KERNEL_HEADERS, \
+    $(eval $(call add_soong_config_var,lineageVarsPlugin,$(v))))
 
 # Ant+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
