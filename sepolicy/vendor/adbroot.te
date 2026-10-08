@@ -1,2 +1,0 @@
-#============= adbroot ==============
-#allow adbroot mediaserver_exec:file { getattr read };
