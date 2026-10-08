@@ -108,7 +108,7 @@ PRODUCT_HOST_PACKAGES += \
     dtbhtoolExynos
 
 # First Model API LEVEL
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_k.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_l.mk)
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
