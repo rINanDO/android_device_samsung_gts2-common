@@ -255,15 +255,24 @@ PRODUCT_PACKAGES += \
     ueventd.universal5433.rc
 
 # First-stage init (which runs before /vendor is mounted) looks for the
-# fstab in the root ramdisk; the fstab.universal5433 PRODUCT_PACKAGES
+# fstab in the boot ramdisk; the fstab.universal5433 PRODUCT_PACKAGES
 # module above only places it under TARGET_OUT_VENDOR_ETC, which isn't
 # available yet at that point. The kernel's own android,fstab devicetree
 # node (with just a "system" entry) isn't a fallback either -- modern
 # libfstab's ReadDefaultFstab() no longer reads devicetree-embedded fstab
 # entries at all, only files. Without this, init panics at boot with
 # "Failed to create FirstStageMount".
+#
+# This must land under TARGET_RAMDISK_OUT ("ramdisk/"), not TARGET_ROOT_OUT
+# ("root/"): modern AOSP builds boot.img's ramdisk from
+# INTERNAL_RAMDISK_FILES, which build/make/core/Makefile defines as
+# whatever was installed under TARGET_RAMDISK_OUT specifically -- confirmed
+# by unpacking an actual built boot.img and finding only the generic
+# ramdisk skeleton (init, dev/, metadata, second_stage_resources) with
+# nothing device-specific, after an earlier attempt placed this file under
+# TARGET_ROOT_OUT instead and the same panic recurred on real hardware.
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.universal5433:root/fstab.universal5433
+    $(LOCAL_PATH)/rootdir/etc/fstab.universal5433:ramdisk/fstab.universal5433
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
