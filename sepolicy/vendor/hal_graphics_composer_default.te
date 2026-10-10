@@ -1,4 +1,12 @@
 #============= hal_graphics_composer_default ==============
+# Modern libui/GraphicBufferMapper probes for a real AIDL
+# android.hardware.graphics.allocator.IAllocator/default service before
+# falling back to the legacy HIDL allocator@2.0/mapper@2.0-2.1 HALs this
+# device actually uses. Without this, the service_manager find is denied
+# outright (not just "not declared"), which GraphicBufferMapper doesn't
+# handle gracefully: it aborts with "gralloc-mapper is missing" instead of
+# falling back, crashing composer and taking surfaceflinger down with it.
+hal_client_domain(hal_graphics_composer_default, hal_graphics_allocator)
 allow hal_graphics_composer_default default_prop:file r_file_perms;
 allow hal_graphics_composer_default self:netlink_kobject_uevent_socket { bind create read setopt };
 allow hal_graphics_composer_default sysfs:file r_file_perms;
