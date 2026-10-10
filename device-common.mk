@@ -254,6 +254,17 @@ PRODUCT_PACKAGES += \
     init.wifi.rc \
     ueventd.universal5433.rc
 
+# First-stage init (which runs before /vendor is mounted) looks for the
+# fstab in the root ramdisk; the fstab.universal5433 PRODUCT_PACKAGES
+# module above only places it under TARGET_OUT_VENDOR_ETC, which isn't
+# available yet at that point. The kernel's own android,fstab devicetree
+# node (with just a "system" entry) isn't a fallback either -- modern
+# libfstab's ReadDefaultFstab() no longer reads devicetree-embedded fstab
+# entries at all, only files. Without this, init panics at boot with
+# "Failed to create FirstStageMount".
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/fstab.universal5433:root/fstab.universal5433
+
 # RenderScript HAL
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
