@@ -179,6 +179,16 @@ EXTENDED_FONT_FOOTPRINT := true
 # Graphics
 USE_OPENGL_RENDERER := true
 
+# This device's gralloc HAL (hardware/samsung_slsi/exynos/gralloc) is the
+# legacy pre-Treble gralloc0 hw_module_t, wrapped only up to HIDL
+# allocator@2.0/mapper@2.0-2.1. Current libui's GraphicBufferMapper
+# requires a real gralloc mapper@4.0+ implementation unless this flag is
+# set, skipping the mapper@2.x/3.x fallback entirely and aborting with
+# "gralloc-mapper is missing" -- confirmed from a real device boot log,
+# after confirming via GraphicBufferMapper.cpp that LEGACY_GRALLOC is
+# precisely the escape hatch for this.
+$(call soong_config_set_bool,libui,legacy_gralloc,true)
+
 # Low memory devices
 MALLOC_SVELTE := true
 
