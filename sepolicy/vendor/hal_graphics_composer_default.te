@@ -7,6 +7,10 @@
 # handle gracefully: it aborts with "gralloc-mapper is missing" instead of
 # falling back, crashing composer and taking surfaceflinger down with it.
 hal_client_domain(hal_graphics_composer_default, hal_graphics_allocator)
+# This HAL's own display-controller code also opens /dev/ion directly
+# (relabeled to ion_device in file_contexts; see hal_graphics_allocator_default.te
+# for the full story on why AOSP's own grant for this disappeared).
+allow hal_graphics_composer_default ion_device:chr_file r_file_perms;
 allow hal_graphics_composer_default default_prop:file r_file_perms;
 allow hal_graphics_composer_default self:netlink_kobject_uevent_socket { bind create read setopt };
 allow hal_graphics_composer_default sysfs:file r_file_perms;

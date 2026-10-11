@@ -1,2 +1,6 @@
 #============= hal_graphics_allocator_default ==============
 allow hal_graphics_allocator_default default_prop:file { getattr open read };
+# legacy_impl's ion_legacy.c opens /dev/ion directly (relabeled to
+# ion_device in file_contexts); AOSP dropped this grant along with the
+# generic file_contexts entry when ion.c became a no-op stub upstream.
+allow hal_graphics_allocator_default ion_device:chr_file r_file_perms;

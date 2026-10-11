@@ -22,6 +22,12 @@
 #
 /dev/mali[0-9]*              u:object_r:gpu_device:s0
 
+# AOSP dropped the generic /dev/ion file_contexts entry (ION is EOL upstream,
+# see libion's ion.c no-op stub), but this device's 3.10 kernel still exposes
+# a real ION chardev via legacy_impl. Without this, /dev/ion falls back to
+# the generic "device" label and every open() is denied.
+/dev/ion                     u:object_r:ion_device:s0
+
 #/dev/seiren                  u:object_r:seiren_device:s0
 
 /dev/v4l-subdev[0-9]*        u:object_r:video_device:s0
