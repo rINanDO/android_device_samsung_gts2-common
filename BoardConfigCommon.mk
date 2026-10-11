@@ -189,6 +189,20 @@ USE_OPENGL_RENDERER := true
 # precisely the escape hatch for this.
 $(call soong_config_set_bool,libui,legacy_gralloc,true)
 
+# With LEGACY_GRALLOC enabled, this device's gralloc.cpp (which still uses
+# the real ioctl-based ION userspace API) finally gets invoked for actual
+# buffer allocation -- but system/memory/libion/ion.c was turned into a
+# permanent no-op stub (always returns -1) in AOSP, since upstream ION
+# kernel support is being dropped ("All kernels with ION support will
+# reach end of life in December 2025"). This device's 3.10 kernel is a
+# real, still-functional CONFIG_ION_EXYNOS=y ION driver, so every
+# allocation failed immediately, surfaceflinger's RenderEngine got a
+# non-GPU-writeable output buffer, and it aborted -- confirmed from a
+# real device boot log. libion/Android.bp already supports switching back
+# to the real ioctl-based implementation (ion_legacy.c/include_legacy)
+# via this exact flag; no source restoration needed.
+$(call soong_config_set_bool,libion,legacy_impl,true)
+
 # Low memory devices
 MALLOC_SVELTE := true
 
