@@ -239,24 +239,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml
 
 # Power
-# libperfmgr is a plain vendor_available cc_library with a single consumer
-# on this device (the service below); Soong's auto-install of a binary's
-# transitive shared_libs doesn't reach it without an explicit PRODUCT_PACKAGES
-# entry here (confirmed: the shared object built fine and linked correctly,
-# but out/target/.../system/vendor/lib never got a copy of it), so the
-# service binary CANNOT_LINK_EXECUTABLE / fails to load at runtime, which
-# left android.hardware.power.IPower/default permanently unregistered and
-# PowerManagerService.nativeInit() blocked until the watchdog killed
-# system_server - no display ever got a chance to come up.
-# It only has a vendor variant (no core/system variant), so Make's bridged
-# module name carries the .vendor suffix (confirmed in
-# out/soong/Android-lineage_gts210wifi.mk: the HAL service's own
-# LOCAL_SHARED_LIBRARIES lists "libperfmgr.vendor") - the bare "libperfmgr"
-# name doesn't resolve and fails the build with "includes non-existent
-# modules in PRODUCT_PACKAGES".
 PRODUCT_PACKAGES += \
-     android.hardware.power-service.lineage-libperfmgr \
-     libperfmgr.vendor
+     android.hardware.power-service.lineage-libperfmgr
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
