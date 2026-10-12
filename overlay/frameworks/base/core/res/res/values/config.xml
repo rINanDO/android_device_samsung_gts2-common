@@ -412,4 +412,16 @@
          off features. -->
     <bool name="config_avoidGfxAccel">true</bool>
 
+    <!-- The lock/unlock chime (KeyguardViewMediator) is played through SoundPool on
+         STREAM_SYSTEM, attenuated only by this value on top of whatever the user's
+         System volume index already is. AOSP's default DEFAULT_SYSTEM_VOLUME_CURVE
+         (frameworks/av/services/audiopolicy/config/default_volume_tables.xml) only
+         spans -24dB..-6dB across the whole slider range, much hotter than
+         DEFAULT_MEDIA_VOLUME_CURVE's -58dB..0dB, so AOSP's own -6dB default here
+         isn't nearly enough attenuation to keep the chime from feeling max-volume
+         loud at a moderate System volume setting on this device. Match common
+         community-device values and pull it down further.
+    -->
+    <integer name="config_lockSoundVolumeDb">-18</integer>
+
 </resources>
