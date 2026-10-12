@@ -119,6 +119,7 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl.universal5433 \
     android.hardware.gnss@1.0-service.universal5433 \
     libshim_gpsd \
+    libshim_icuuc \
     libutils-v32
 
 PRODUCT_COPY_FILES += \
