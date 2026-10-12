@@ -1,1 +1,14 @@
 allow domain same_process_hal_file:file { execmod execute getattr map open read };
+
+# This device's legacy gralloc HAL (loaded in-process via the mapper's
+# passthrough path, not out-of-process over hwbinder) opens /dev/ion directly
+# via legacy_impl's ion.c (relabeled to ion_device in file_contexts; see
+# hal_graphics_allocator_default.te for the full story on why AOSP's own
+# domain-wide grant for this disappeared) whenever a process registers or
+# imports a graphic buffer handle. That is effectively every domain that ever
+# touches a GraphicBuffer - so far this has hit hal_graphics_allocator_default,
+# hal_graphics_composer_default, hal_camera_default, system_server,
+# mediaswcodec, platform_app (SystemUI) and untrusted_app (camera apps taking
+# a picture) one at a time as each new denial surfaced. Grant it once, broadly,
+# instead of chasing every remaining domain individually.
+allow domain ion_device:chr_file r_file_perms;
