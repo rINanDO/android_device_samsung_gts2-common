@@ -1,0 +1,21 @@
+// vendor/bin/gpsd (a prebuilt Lollipop-era Samsung blob) carries a
+// DT_NEEDED on libicuuc.so, but references zero symbols from it (verified
+// via readelf --dyn-syms: no ucol_/uloc_/unum_/etc. or any other ICU
+// C-API name appears among its undefined symbols). Modern AOSP no longer
+// ships a loose libicuuc.so - ICU now lives inside the com.android.i18n
+// APEX - so the dynamic linker fails to load gpsd at all with "library
+// \"libicuuc.so\" not found", even though nothing in the binary actually
+// calls into it. The std::locale/ios_base symbols gpsd does use come from
+// libc++.so itself, which on this build has no ICU dependency either
+// (confirmed via readelf -d: libc++.so's NEEDED list is just libc/libm/libdl).
+//
+// This is a dead DT_NEEDED entry left over from however Samsung's original
+// build linked this binary. Satisfy it with an empty stub, same technique
+// as libshim_gpsd next to it.
+cc_library_shared {
+    name: "libshim_icuuc",
+    stem: "libicuuc",
+    proprietary: true,
+
+    srcs: ["empty.cpp"],
+}
