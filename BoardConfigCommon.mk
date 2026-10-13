@@ -306,8 +306,12 @@ SELINUX_IGNORE_NEVERALLOWS := true
 #TARGET_NO_SENSOR_PERMISSION_CHECK := true
 
 # Shims
+# libbauthserver.so used to be shimmed onto libbauthtzcommon_shim.so (a 2017
+# stub whose BAuth_Hat_OP() never actually forwarded the HAT to the fingerprint
+# trustlet, silently breaking enroll/auth). The real libbauthtzcommon.so is now
+# present under proprietary/ and picked up by find-vendor-blobs, so link
+# against it directly instead.
 $(call soong_config_set,bionic,ld_shim_libs,"\
-    /system/vendor/lib/libbauthserver.so|libbauthtzcommon_shim.so \
     /system/bin/mediaserver|/system/lib/libstagefright_shim.so")
 
 # Legacy BLOB Support
