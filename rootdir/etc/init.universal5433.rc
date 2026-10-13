@@ -54,6 +54,19 @@ on init
     symlink /dev/block/platform/15540000.dwmmc0/by-name/RADIO /dev/mbin0
     restorecon /dev/mbin0
 
+    # NOTE: the validity_fingerprint SPI driver is built into the kernel and
+    # probes during do_initcalls(), long before userspace init loads the
+    # SELinux policy, so its sysfs nodes end up stamped with the generic
+    # "sysfs" label instead of the genfscon-assigned "sysfs_fingerprint"
+    # label. Unlike /dev/mbin0 above, this is NOT fixable with restorecon:
+    # sysfs is a genfs-backed filesystem with no on-disk xattr storage, so
+    # the kernel computes and caches each inode's SID once at creation time
+    # and userspace can never rewrite it afterwards (a restorecon_recursive
+    # here was tried and confirmed to be a silent no-op). The real fix is
+    # in device/samsung/gts2-common/sepolicy/vendor/hal_fingerprint_default.te,
+    # which grants hal_fingerprint_default access to the generic "sysfs"
+    # type directly, since that's the label these nodes actually carry.
+
     # msockets for modem sockets with same permissions as /dev/sockets
     # except that the owner is system and part of radio group
     mkdir /dev/socket/msockets 0751 system radio
