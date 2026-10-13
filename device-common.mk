@@ -105,8 +105,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint-service.samsung \
-    libbauthtzcommon_shim
+    android.hardware.biometrics.fingerprint-service.samsung
 
 # Flat device tree for boot image
 PRODUCT_HOST_PACKAGES += \
