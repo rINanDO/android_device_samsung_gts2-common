@@ -8,3 +8,18 @@ allow hal_fingerprint_default system_data_root_file:dir create_dir_perms;
 allow hal_fingerprint_default system_data_root_file:file create_file_perms;
 allow hal_fingerprint_default tee_device:chr_file rw_file_perms;
 allow hal_fingerprint_default tee:unix_stream_socket connectto;
+
+# /sys/class/fingerprint and /sys/devices/virtual/fingerprint are genfscon-
+# declared as sysfs_fingerprint (see device/samsung_slsi/sepolicy/common/
+# vendor/genfs_contexts and hal_fingerprint_default.te), but the
+# validity_fingerprint SPI driver is built into the kernel and probes
+# during do_initcalls(), before SELinux policy is loaded. Sysfs inodes get
+# their SID computed once at creation from whatever policy is active at
+# the time (none yet), so these nodes are permanently stuck with the
+# generic "sysfs" label for the life of the boot - confirmed live on
+# device via `ls -laZ`, and restorecon_recursive cannot fix it (sysfs has
+# no xattr storage for the kernel to rewrite). Grant the label they
+# actually carry so hal_fingerprint_default can read sensor type/
+# calibration state from them.
+allow hal_fingerprint_default sysfs:dir r_dir_perms;
+allow hal_fingerprint_default sysfs:file r_file_perms;
