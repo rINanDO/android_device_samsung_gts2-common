@@ -11,6 +11,15 @@
         </interface>
     </hal>
     <hal format="hidl">
+        <name>android.hardware.gatekeeper</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IGatekeeper</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl">
         <name>android.hardware.audio.effect</name>
         <transport>hwbinder</transport>
         <version>7.0</version>

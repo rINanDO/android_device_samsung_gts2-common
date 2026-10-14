@@ -115,8 +115,13 @@ PRODUCT_HOST_PACKAGES += \
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_k.mk)
 
 # Gatekeeper
+# Real TEE-backed gatekeeper (talks to the same mobicore TEE as fingerprint),
+# replacing the AOSP software fallback. The software HAT it issued couldn't be
+# validated by the bauth fingerprint trustlet (TLC_BAUTH: "Trustlet did not
+# send a valid return code"), since it isn't signed by anything the TEE trusts.
 PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-service.software
+    android.hardware.gatekeeper@1.0-service \
+    gatekeeper.exynos5433
 
 # Gps
 PRODUCT_PACKAGES += \

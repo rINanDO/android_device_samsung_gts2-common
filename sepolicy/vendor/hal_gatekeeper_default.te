@@ -1,0 +1,14 @@
+# Real exynos5433 TEE-backed gatekeeper HAL (gatekeeper.exynos5433.so,
+# loaded by the generic android.hardware.gatekeeper@1.0-service passthrough
+# binary), replacing the AOSP software gatekeeper fallback. It talks to the
+# mobicore TEE the same way hal_fingerprint_default does.
+
+# /dev/mobicore-user
+allow hal_gatekeeper_default tee_device:chr_file rw_file_perms;
+
+# /vendor/app/mcRegistry/ - labeled vendor_app_file on this device since the
+# mobicore-specific file_contexts (mobicore_vendor_file) isn't included here
+# (see device/samsung/gts2-common/sepolicy/vendor/hal_fingerprint_default.te
+# for the same situation with sysfs/sysfs_fingerprint).
+allow hal_gatekeeper_default vendor_app_file:dir search;
+allow hal_gatekeeper_default vendor_app_file:file r_file_perms;
