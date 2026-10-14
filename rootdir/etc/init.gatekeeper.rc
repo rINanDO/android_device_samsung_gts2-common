@@ -1,0 +1,8 @@
+on post-fs-data
+    # Persistent storage for the real TEE-backed gatekeeper HAL
+    # (gatekeeper.universal5433.so / tlcTeeGatekeeper_if.cpp). This is the
+    # generic AOSP gatekeeper_vendor_data_file path (system/sepolicy/vendor/
+    # file_contexts), already granted full create/rw access to the
+    # hal_gatekeeper attribute by generic sepolicy - just never created on
+    # disk, since no device-independent .rc does so for this HAL.
+    mkdir /data/vendor/gatekeeper 0770 system system
