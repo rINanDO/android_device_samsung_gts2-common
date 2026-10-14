@@ -1,4 +1,4 @@
-# Real exynos5433 TEE-backed gatekeeper HAL (gatekeeper.exynos5433.so,
+# Real exynos5433 TEE-backed gatekeeper HAL (gatekeeper.universal5433.so,
 # loaded by the generic android.hardware.gatekeeper@1.0-service passthrough
 # binary), replacing the AOSP software gatekeeper fallback. It talks to the
 # mobicore TEE the same way hal_fingerprint_default does.
