@@ -3,6 +3,7 @@ import /system/vendor/etc/init/hw/init.wifi.rc
 import /system/vendor/etc/init/hw/init.baseband.rc
 import /system/vendor/etc/init/hw/init.samsung.rc
 import /system/vendor/etc/init/hw/init.power.rc
+import /system/vendor/etc/init/hw/init.gatekeeper.rc
 
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
