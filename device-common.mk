@@ -132,6 +132,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_l.mk)
 # send a valid return code"), since it isn't signed by anything the TEE trusts.
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service \
+    android.hardware.gatekeeper@1.0-impl \
     gatekeeper.universal5433
 
 # Gps
