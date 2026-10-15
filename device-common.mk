@@ -261,6 +261,7 @@ PRODUCT_COPY_FILES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.universal5433 \
+    init.fingerprint.rc \
     init.gatekeeper.rc \
     init.samsung.rc \
     init.universal5433.rc \

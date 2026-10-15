@@ -1,0 +1,30 @@
+on post-fs-data
+    # Persistent storage for the real TEE-backed fingerprint HAL
+    # (android.hardware.biometrics.fingerprint-service.samsung, see
+    # hardware/samsung/aidl/fingerprint/Session.h FINGERPRINT_DATA_DIR).
+    # This is the device-specific biometrics_vendor_data_file path
+    # (device/samsung_slsi/sepolicy/common/vendor/file_contexts),
+    # already granted full create/rw access to hal_fingerprint_default
+    # by that same tree's hal_fingerprint_default.te - just never
+    # created on disk, since no device-independent .rc does so for
+    # this HAL. Without this, enrolled templates only persist in
+    # TEE-transient state for the current boot.
+    mkdir /data/vendor/biometrics 0770 system system
+    mkdir /data/vendor/biometrics/fp 0770 system system
+
+    # The closed-source libbauthserver.so blob (vendor/samsung/gts2-common/
+    # proprietary/.../libbauthserver.so) itself hardcodes a SEPARATE legacy
+    # pre-Treble path, "/data/biometrics/..." (no "vendor" segment) - confirmed
+    # via `strings` on the blob (/data/biometrics/fp/User_%d, meta, bk, type,
+    # sec_auth_id.dat, etc). Live testing confirmed enrollment succeeds within
+    # a boot but is reported lost (FingerprintService's doTemplateCleanup()
+    # purges the "dangling" framework record) on the very next boot, right
+    # after the blob logs "active_group path is diff" for the AOSP-supplied
+    # /data/vendor/biometrics path - strongly suggesting the blob's actual
+    # persistent read/write targets this legacy path instead, which (unlike
+    # /data/vendor/biometrics) was never created by any .rc either. Falls
+    # under the generic system_data_file label (no more specific file_contexts
+    # entry exists for it), already granted to hal_fingerprint_default by the
+    # same gts2-common hal_fingerprint_default.te rules.
+    mkdir /data/biometrics 0770 system system
+    mkdir /data/biometrics/fp 0770 system system
