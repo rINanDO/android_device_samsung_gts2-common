@@ -22,6 +22,8 @@
 #include <hardware/gps.h>
 #include <hidl/Status.h>
 
+#include <mutex>
+
 namespace android {
 namespace hardware {
 namespace gnss {
@@ -74,6 +76,9 @@ struct AGnssRil : public IAGnssRil {
 
  private:
     const AGpsRilInterface* mAGnssRilIface = nullptr;
+    // Guards sAGnssRilCbIface: the GPS library calls back on its own thread
+    // while setCallback() may replace the callback on a binder thread.
+    static std::mutex sAGnssRilCbIfaceMutex;
     static sp<IAGnssRilCallback> sAGnssRilCbIface;
     static std::vector<std::unique_ptr<ThreadFuncArgs>> sThreadFuncArgsList;
     static bool sInterfaceExists;
