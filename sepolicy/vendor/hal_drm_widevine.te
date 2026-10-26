@@ -19,3 +19,6 @@ allow hal_drm_widevine mediadrm_vendor_data_file:file create_file_perms;
 allow hal_drm_widevine media_data_file:dir search;
 allow hal_drm_widevine secmem_device:chr_file rw_file_perms;
 
+
+# The Widevine blob allocates its buffers through the legacy /dev/ion.
+allow hal_drm_widevine ion_device:chr_file rw_file_perms;

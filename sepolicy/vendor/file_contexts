@@ -41,6 +41,7 @@
 #/dev/block/mmcblk0p3         u:object_r:emmcblk_device:s0
 /dev/block/mmcblk0p9         u:object_r:boot_block_device:s0
 /dev/block/mmcblk0p10        u:object_r:recovery_block_device:s0
+/dev/block/mmcblk0p11        u:object_r:misc_block_device:s0
 /dev/block/mmcblk0p19        u:object_r:system_block_device:s0
 /dev/block/mmcblk0p20        u:object_r:cache_block_device:s0
 /dev/block/mmcblk0p22        u:object_r:userdata_block_device:s0
@@ -210,3 +211,10 @@
 #/(vendor|system/vendor)/bin/hw/android\.hardware\.wifi@1\.0-service\.legacy              u:object_r:hal_wifi_default_exec:s0
 
 /sys/module/dhd/parameters/firmware_path	u:object_r:sysfs_wifi_writable:s0
+
+# ODM
+# There is no odm or vendor partition: /odm is /system/vendor/odm, which only
+# matches AOSP's generic /system/vendor rule (vendor_file). Label its etc like
+# AOSP's /odm/etc, so init and zygote_next can read odm_file_contexts and
+# odm_seapp_contexts.
+/system/vendor/odm/etc(/.*)?   u:object_r:vendor_configs_file:s0

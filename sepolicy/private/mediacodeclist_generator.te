@@ -1,0 +1,2 @@
+# libstagefright reads media.stagefright.* settings while listing the codecs.
+get_prop(mediacodeclist_generator, media_config_prop)

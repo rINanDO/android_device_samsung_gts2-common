@@ -1,0 +1,3 @@
+# /proc/device-tree is a plain proc file on this 3.10 kernel, not the sysfs
+# firmware node kcmdlinectrl expects; it works without it.
+dontaudit kcmdlinectrl proc:file read;
