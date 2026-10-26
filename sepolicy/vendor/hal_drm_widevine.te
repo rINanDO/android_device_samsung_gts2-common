@@ -22,3 +22,7 @@ allow hal_drm_widevine secmem_device:chr_file rw_file_perms;
 
 # The Widevine blob allocates its buffers through the legacy /dev/ion.
 allow hal_drm_widevine ion_device:chr_file rw_file_perms;
+
+# L1 (TEE-backed) keys: connect to the mobicore daemon's abstract "mcdaemon"
+# socket, as the other mobicore clients do.
+allow hal_drm_widevine tee:unix_stream_socket connectto;
