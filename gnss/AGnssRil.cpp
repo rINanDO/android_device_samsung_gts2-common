@@ -25,6 +25,7 @@ namespace V1_0 {
 namespace implementation {
 
 std::vector<std::unique_ptr<ThreadFuncArgs>> AGnssRil::sThreadFuncArgsList;
+std::mutex AGnssRil::sAGnssRilCbIfaceMutex;
 sp<IAGnssRilCallback> AGnssRil::sAGnssRilCbIface = nullptr;
 bool AGnssRil::sInterfaceExists = false;
 
@@ -46,24 +47,38 @@ AGnssRil::~AGnssRil() {
 }
 
 void AGnssRil::requestSetId(uint32_t flags) {
-    if (sAGnssRilCbIface == nullptr) {
+    // Hold a strong reference, so a concurrent setCallback() can't free the
+    // callback while it is in use.
+    sp<IAGnssRilCallback> cbIface;
+    {
+        std::lock_guard<std::mutex> lock(sAGnssRilCbIfaceMutex);
+        cbIface = sAGnssRilCbIface;
+    }
+    if (cbIface == nullptr) {
         ALOGE("%s: AGNSSRil Callback Interface configured incorrectly", __func__);
         return;
     }
 
-    auto ret = sAGnssRilCbIface->requestSetIdCb(flags);
+    auto ret = cbIface->requestSetIdCb(flags);
     if (!ret.isOk()) {
         ALOGE("%s: Unable to invoke callback", __func__);
     }
 }
 
 void AGnssRil::requestRefLoc(uint32_t /*flags*/) {
-    if (sAGnssRilCbIface == nullptr) {
+    // Hold a strong reference, so a concurrent setCallback() can't free the
+    // callback while it is in use.
+    sp<IAGnssRilCallback> cbIface;
+    {
+        std::lock_guard<std::mutex> lock(sAGnssRilCbIfaceMutex);
+        cbIface = sAGnssRilCbIface;
+    }
+    if (cbIface == nullptr) {
         ALOGE("%s: AGNSSRil Callback Interface configured incorrectly", __func__);
         return;
     }
 
-    auto ret = sAGnssRilCbIface->requestRefLocCb();
+    auto ret = cbIface->requestRefLocCb();
     if (!ret.isOk()) {
         ALOGE("%s: Unable to invoke callback", __func__);
     }
@@ -80,7 +95,10 @@ Return<void> AGnssRil::setCallback(const sp<IAGnssRilCallback>& callback)  {
         return Void();
     }
 
-    sAGnssRilCbIface = callback;
+    {
+        std::lock_guard<std::mutex> lock(sAGnssRilCbIfaceMutex);
+        sAGnssRilCbIface = callback;
+    }
 
     mAGnssRilIface->init(&sAGnssRilCb);
     return Void();
