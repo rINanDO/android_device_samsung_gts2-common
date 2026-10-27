@@ -83,10 +83,13 @@ volume index from 0 to 100.
                                         ref="DEFAULT_HEARING_AID_VOLUME_CURVE"/>
     <volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_HEADSET"
                                         ref="DEFAULT_NON_MUTABLE_HEADSET_VOLUME_CURVE"/>
+    <!-- Tablet speaker: AOSP's curve starts at -30 dB, which is loud at the
+         lowest step. Start at -40 dB, but not as low as the media curve
+         (-58 dB), so the alarm can still wake you up. -->
     <volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_SPEAKER">
-        <point>0,-2970</point>
-        <point>33,-2010</point>
-        <point>66,-1020</point>
+        <point>0,-4000</point>
+        <point>33,-2600</point>
+        <point>66,-1300</point>
         <point>100,0</point>
     </volume>
     <volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_EARPIECE"
