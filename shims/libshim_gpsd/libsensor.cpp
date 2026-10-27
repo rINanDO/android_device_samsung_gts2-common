@@ -51,13 +51,4 @@ namespace android {
     template<> Mutex Singleton<SensorManager>::sLock(Mutex::PRIVATE);
     template<> SensorManager* Singleton<SensorManager>::sInstance(nullptr);
 
-    extern "C" void _ZN7android13SensorManager16createEventQueueEv();
-    extern "C" void _ZN7android13SensorManager16createEventQueueEv(){}
-
-    extern "C" void _ZN7android13SensorManagerC1Ev();
-    extern "C" void _ZN7android13SensorManagerC1Ev(){}
-
-    extern "C" void _ZNK7android16SensorEventQueue5getFdEv();
-    extern "C" void _ZNK7android16SensorEventQueue5getFdEv(){};
-
 }
