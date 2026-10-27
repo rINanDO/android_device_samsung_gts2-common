@@ -39,22 +39,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
-# This HAL (hardware/samsung/audio/audio_hw.c) has no idle timer of its own;
-# AudioFlinger alone decides when to call out_standby() on an output thread
-# (default 3s of silence, see kDefaultStandbyTimeInNsecs). Every standby->
-# active transition re-does enable_output_path_l()+pcm_open() from a cold
-# analog/codec power-up, and short UI "touch sound" clicks (a few hundred ms)
-# played right after that cold start land partly inside the speaker amp/DAC's
-# power-up settling time, so the same click sounds louder or quieter
-# depending on how long the output had been idle. Confirmed on-device: the
-# first tap after any pause is the one that sounds off, back-to-back taps
-# sound consistent - exactly the standby/cold-reopen signature. 30s wasn't
-# long enough to cover realistic pauses between taps during normal use
-# (reading a screen, deciding what to tap next), so raise it well past
-# typical human pause lengths.
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.audio.flinger_standbytime_ms=120000
-
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
