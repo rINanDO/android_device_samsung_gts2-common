@@ -15,6 +15,11 @@ binder_call(gpsd, system_server)
 binder_call(gpsd, system_suspend_server)
 hwbinder_use(gpsd)
 
+# Sensor-assisted GNSS: libsensor_vendor uses the AIDL sensorservice, which
+# delivers sensor events by calling back into gpsd
+allow gpsd fwk_sensor_service:service_manager find;
+binder_call(system_server, gpsd)
+
 allow gpsd hal_system_suspend_service:service_manager find;
 
 # Sockets
