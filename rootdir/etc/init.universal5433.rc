@@ -9,6 +9,13 @@ import /system/vendor/etc/init/hw/init.fingerprint.rc
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
+    # There is no metadata partition, but aconfigd needs a writable
+    # /metadata at early-init/post-fs; without it the flag storage is
+    # never created and system_server crashes at boot. Use a tmpfs, the
+    # flag storage is regenerated every boot anyway.
+    mount tmpfs tmpfs /metadata nosuid nodev noexec mode=0755
+    restorecon /metadata
+
 on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/media_rw/extSdCard 0700 media_rw media_rw
